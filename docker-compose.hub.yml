@@ -1,0 +1,48 @@
+version: '3.8'
+networks:
+  net1:
+    driver: bridge
+# 定义项目中的服务
+services:
+  # 名为mysql的服务
+  mysql:
+    # 指定容器名称
+    container_name: "mysql"
+    # 端口镜像
+    image: 'mysql:latest'
+    # 端口
+#    ports:
+#      - "3306:3306"
+    volumes:
+      - $PWD/mysql:/var/lib/mysql
+    # 设置
+    environment:
+      MYSQL_ROOT_PASSWORD: password #root密码
+      MYSQL_DATABASE: zentao # 数据库
+      MYSQL_USER: zentao # 创建的用户
+      MYSQL_PASSWORD: zentaoPassword # 创建的用户的密码
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # 使用定义的网络
+    networks:
+      - net1
+  zentao:
+    container_name: "zentao"
+    image: 'easysoft/zentao:latest'
+    ports:
+      - "8080:80"
+    volumes:
+      - $PWD/zentao:/data
+    # 设置
+    environment:
+      - MYSQL_INTERNAL=false
+      - ZT_MYSQL_HOST=mysql
+      - ZT_MYSQL_PORT=3306
+      - ZT_MYSQL_USER=root
+      - ZT_MYSQL_PASSWORD=password
+      - ZT_MYSQL_DB=zentao
+    restart: always
+    depends_on:
+      - mysql
+    networks:
+      - net1
+

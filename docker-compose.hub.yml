@@ -29,7 +29,7 @@ services:
     container_name: "zentao"
     image: 'easysoft/zentao:latest'
     ports:
-      - "8080:80"
+      - "8090:80"
     volumes:
       - $PWD/zentao:/data
     # 设置

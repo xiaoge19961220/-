@@ -1,1 +1,3 @@
-.idea
+*/
+!docker-compose.hub.yml
+!README.md

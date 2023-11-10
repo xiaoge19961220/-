@@ -27,7 +27,7 @@ services:
       - net1
   zentao:
     container_name: "zentao"
-    image: 'easysoft/zentao:latest'
+    image: 'easysoft/zentao:latest' # mac image: 'easysoft/zentao:18.7-20231030'
     ports:
       - "8090:80"
     volumes:
